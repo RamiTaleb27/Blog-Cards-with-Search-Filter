@@ -4,17 +4,17 @@ const jsonServer = require("json-server");
 
 const app = express();
 
-// Serve static files from Vite build
-app.use(express.static(path.join(__dirname, "dist")));
+// Serve static files from relative path
+app.use(express.static(path.join(__dirname, "./dist")));
 
-// Setup json-server for API routes
-const router = jsonServer.router("db.json"); // your JSON database
+// json-server API (relative path)
+const router = jsonServer.router("./db.json");
 const middlewares = jsonServer.defaults();
-app.use("/api", middlewares, router);
+app.use("./api", middlewares, router); // using relative path
 
-// All other requests serve React frontend
+// Serve React for all other routes
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
 
 // Start server

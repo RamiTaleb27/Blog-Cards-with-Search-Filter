@@ -43,7 +43,7 @@ function App() {
         setIsLoading(true);
         setErrorMessage("");
 
-        const res = await fetch("/api/posts");
+        const res = await fetch("./api/posts");
 
         if (!res.ok) {
           if (res.status === 404) {
