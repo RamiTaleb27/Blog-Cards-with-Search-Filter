@@ -1,21 +1,18 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
+const express = require("express");
+const path = require("path");
 const jsonServer = require("json-server");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
+
+// Serve static React build
 app.use(express.static(path.join(__dirname, "./dist")));
 
+// json-server API
 const router = jsonServer.router("./db.json");
 const middlewares = jsonServer.defaults();
 app.use("/api", middlewares, router);
 
+// Serve React for all other routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
